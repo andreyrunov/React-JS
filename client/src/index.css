@@ -78,6 +78,26 @@ header .shop-cart .item b {
   font-weight: 600;
 }
 
+header .shop-cart .item .delete-icon {
+  color: #ca5252;
+  float: right;
+  position: relative;
+  top: -25px;
+  cursor: pointer;
+  transition: color, transform 500ms ease;
+}
+
+header .shop-cart .item .delete-icon:hover {
+  color: #d83030;
+  transform: scale(1.1);
+}
+
+header .shop-cart .sum {
+  float: left;
+  width: 100%;
+  
+}
+
 header ul.nav {
   float: right;
   list-style: none;
@@ -95,7 +115,7 @@ header ul.nav li:hover {
 }
 
 header .presentation {
-  margin: 50px;
+  margin: 50px 0px;
   background: url(./img/presentation-bg.jpg) no-repeat;
   width: 100%;
   height: 500px;
