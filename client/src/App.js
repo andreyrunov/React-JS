@@ -3,6 +3,7 @@ import Categories from './components/Categories'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Items from './components/Items'
+import ShowFullItem from './components/ShowFullItem'
 
 class App extends React.Component {
 	constructor(props) {
@@ -66,11 +67,13 @@ class App extends React.Component {
 					price: '49.90',
 				},
 			],
+			showFullItem: false,
 		}
 		this.state.currentItems = this.state.items
 		this.addToOrder = this.addToOrder.bind(this) // за счет это строчки в методе addToOrder мы сможем взаимодействовать с состояниями (orders, items выше)
 		this.deleteOrder = this.deleteOrder.bind(this)
 		this.chooseCategory = this.chooseCategory.bind(this)
+		this.onShowItem = this.onShowItem.bind(this)
 	}
 
 	render() {
@@ -78,10 +81,19 @@ class App extends React.Component {
 			<div className='wrapper'>
 				<Header orders={this.state.orders} onDelete={this.deleteOrder} />
 				<Categories chooseCategory={this.chooseCategory} />
-				<Items items={this.state.currentItems} onAdd={this.addToOrder} />
+				<Items
+					onShowItem={this.onShowItem}
+					items={this.state.currentItems}
+					onAdd={this.addToOrder}
+				/>
+				{this.state.showFullItem && <ShowFullItem />}
 				<Footer />
 			</div>
 		)
+	}
+
+	onShowItem() {
+		this.setState({showFullItem: !this.state.showFullItem})
 	}
 
 	chooseCategory(category) {

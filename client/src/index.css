@@ -187,6 +187,7 @@ main .item img {
   height: auto;
   border-radius: 10px 10px 0 0;
   transition: transform 500ms ease;
+  cursor: pointer;
 }
 
 main .item img:hover {
