@@ -1,4 +1,5 @@
 import React from 'react'
+import Categories from './components/Categories'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Items from './components/Items'
@@ -8,6 +9,7 @@ class App extends React.Component {
 		super(props)
 		this.state = {
 			orders: [],
+			currentItems: [],
 			items: [
 				{
 					id: 1,
@@ -15,7 +17,7 @@ class App extends React.Component {
 					img: 'denys-striyeshyn-wJ7yGwz2-00-unsplash.jpg',
 					desc:
 						'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона',
-					category: 'Стулья',
+					category: 'chairs',
 					price: '49.90',
 				},
 				{
@@ -24,7 +26,7 @@ class App extends React.Component {
 					img: 'goashape-RvyJGaoaWrs-unsplash.jpg',
 					desc:
 						'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона',
-					category: 'Стулья',
+					category: 'chairs',
 					price: '49.90',
 				},
 				{
@@ -33,7 +35,7 @@ class App extends React.Component {
 					img: 'inside-weather-BayIzHKkjM4-unsplash.jpg',
 					desc:
 						'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона',
-					category: 'Стулья',
+					category: 'tables',
 					price: '49.90',
 				},
 				{
@@ -42,7 +44,7 @@ class App extends React.Component {
 					img: 'jean-philippe-delberghe-xrjusFfOksI-unsplash.jpg',
 					desc:
 						'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона',
-					category: 'Стулья',
+					category: 'sofa',
 					price: '49.90',
 				},
 				{
@@ -51,7 +53,7 @@ class App extends React.Component {
 					img: 'khloe-arledge-8Rz_RIyp5FM-unsplash.jpg',
 					desc:
 						'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона',
-					category: 'Стулья',
+					category: 'light',
 					price: '49.90',
 				},
 				{
@@ -60,23 +62,38 @@ class App extends React.Component {
 					img: 'maiar-shalaby-faJf1aDiezQ-unsplash.jpg',
 					desc:
 						'Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает более или менее стандартное заполнение шаблона',
-					category: 'Стулья',
+					category: 'light',
 					price: '49.90',
 				},
 			],
 		}
+		this.state.currentItems = this.state.items
 		this.addToOrder = this.addToOrder.bind(this) // за счет это строчки в методе addToOrder мы сможем взаимодействовать с состояниями (orders, items выше)
 		this.deleteOrder = this.deleteOrder.bind(this)
+		this.chooseCategory = this.chooseCategory.bind(this)
 	}
 
 	render() {
 		return (
 			<div className='wrapper'>
-				<Header orders={this.state.orders} onDelete={this.deleteOrder}/>
-				<Items items={this.state.items} onAdd={this.addToOrder} />
+				<Header orders={this.state.orders} onDelete={this.deleteOrder} />
+				<Categories chooseCategory={this.chooseCategory} />
+				<Items items={this.state.currentItems} onAdd={this.addToOrder} />
 				<Footer />
 			</div>
 		)
+	}
+
+	chooseCategory(category) {
+		if (category === 'all') {
+			this.setState({currentItems: this.state.items})
+			return
+		}
+
+		this.setState({
+			currentItems: this.state.items.filter(el => el.category === category)
+		})
+		
 	}
 
 	deleteOrder(id) {
